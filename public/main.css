@@ -1,0 +1,19 @@
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
