@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
+
+    <h1>Legg til Reinsdyr</h1>
+
+    <form action="/api/add-reinsdyr" method="POST">
+        <label for="serienummer">Serienummer</label>
+        <input type="text" name="serienummer" placeholder="Serienummer" required>
+
+        <label for="navn">Navn</label>
+        <input type="text" name="navn" placeholder="Navn">
+
+        <label for="fodselsdato">Fødselsdato</label>
+        <input type="date" name="fodselsdato">
+
+        <label for="flokkId">Flokk</label>
+        <select name="flokkId" required>
+            <% flokker.forEach(flokk => { %>
+                <option value="<%= flokk._id %>"><%= flokk.navnPaFlokken %></option>
+            <% }) %>
+        </select>
+        
+        <button type="submit">Add Reinsdyr</button>
+    </form>
+    
+</body>
+</html>

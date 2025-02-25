@@ -6,5 +6,6 @@ const limiter = require("../utils/rateLimitConfig.js");
    
 router.post("/register", limiter, authController.register);
 router.post("/login", limiter, authController.login);
+router.get("/logout", authController.logout);
 
 module.exports = router;

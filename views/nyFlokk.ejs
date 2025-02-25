@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
+
+    <h1><% title %></h1>
+
+    <% if (msg) { %>
+        <p><%= msg %></p>
+    <% } %>
+    
+    <form action="/api/nyFlokk" method="POST" enctype="multipart/form-data">
+    <label for="navnPaFlokken">Navn på flokken:</label>
+    <input type="text" id="navnPaFlokken" name="navnPaFlokken" required>
+    
+    <label for="serieinndeling">Serieinndeling:</label>
+    <input type="text" id="serieinndeling" name="serieinndeling">
+    
+    <label for="buemerkeNavn">Bumerke navn:</label>
+    <input type="text" id="buemerkeNavn" name="buemerkeNavn">
+    
+    <label for="buemerkeBilde">Bumerke bilde:</label>
+    <input type="file" id="buemerkeBilde" name="buemerkeBilde">
+    
+    <button type="submit">Opprett flokk</button>
+</form>
+    
+</body>
+</html>

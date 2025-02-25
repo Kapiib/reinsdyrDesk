@@ -1,5 +1,6 @@
 const db = require("../db/dbConfig.js");
 const bcrypt = require("bcrypt");
+const { generateToken } = require("../utils/jwtUtils.js") 
 const jwt = require("jsonwebtoken");
 
 const EIER = require("../models/eier");
@@ -59,7 +60,6 @@ const authController = {
                 passord: hashedPassord,
             });
     
-            // Redirect to login page after successful registration
             return res.redirect("/auth/login");
     
         } catch (error) {
@@ -85,21 +85,23 @@ const authController = {
 
             if (!isMatch) {
                 return res.status(401).send("Invalid credentials");
-            }
+            }   
 
-            const token = jwt.sign({
-                userId: user._id, epost: user.epost, navn: user.navn},
-                JWT_SECRET,
-                { expiresIn: "1h"}
-            );
+            const payload = {
+                _id: user._id,
+                epost: user.epost,
+                navn: user.navn,
+            };
+
+            const token = generateToken(payload);
 
             res.cookie('jwt', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 3600,
+                maxAge: 1000 * 60 * 24
             });
 
-            return res.redirect("/");
+            return res.redirect("/api/profile");
         } catch (error) {
             conole.log("Login error", error);
             return res.render('login', {
@@ -108,6 +110,10 @@ const authController = {
                 msg: "Something went wrong, please try again!",
             });
         }
+    },
+    logout: async (req, res) => {
+        res.clearCookie('jwt');
+        return res.redirect("/");
     }
 }
 
