@@ -4,10 +4,22 @@
 <body>
     <%- include('partials/navbar') %>
 
-    <h1>Welcome <%= user.epost %></h1>
+    <h1>Welcome to your profile: <%= user.epost %></h1>
+
+    <h2>Mine Flokker</h2>
+    <%- include('partials/flokkerList', { flokker: flokker, showEier: false }) %>
+
+    <div class="profile-buttons">
     
     <a href="/api/nyFlokk" class="button">Lage Flokk</a>
-    <a href="/add-reinsdyr" class="button">Legg til Reinsdyr</a>
+
+    <% if (flokker && flokker.length > 0) { %>
+        <a href="/api/add-reinsdyr" class="button">Legg til Reinsdyr</a>
+    <% } %>
+
+    <a href="/api/beiteomrade" class="button">Knyte Flokk til Beiteomrade</a>
+
+    </div>
 
 </body>
 </html>

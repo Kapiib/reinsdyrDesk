@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="no">
+    <%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
+
+    <h1>Database Informasjon</h1>
+
+    <section class="database-info">
+        <h2>Hva databasen inneholder</h2>
+        <p>
+            Databasen vår inneholder informasjon om eiere, flokker, reinsdyr og beiteområder.
+            Her er en oversikt over hovedentitetene og deres relasjoner:
+        </p>
+
+        <h3>Entiteter og Attributter</h3>
+        <ul>
+            <li>
+                <strong>Eier (Owner)</strong>
+                <ul>
+                    <li>UUID (unikt nummer)</li>
+                    <li>Navn</li>
+                    <li>Epost</li>
+                    <li>Passord</li>
+                    <li>Kontaktspråk (samisk)</li>
+                    <li>Telefonnummer</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Flokk (Herd)</strong>
+                <ul>
+                    <li>Navn på flokken</li>
+                    <li>Serieinndeling</li>
+                    <li>Bucmerke (navn)</li>
+                    <li>Bucmerke (bilde)</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Individuelt reinsdyr (Individual Reindeer)</strong>
+                <ul>
+                    <li>ID (implied)</li>
+                    <li>Navn</li>
+                    <li>Födselsdata</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Beiteområde (Grazing Area)</strong>
+                <ul>
+                    <li>Primart betteområde</li>
+                    <li>Språkområde</li>
+                    <li>Fylke(r)</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>ER Diagram</h3>
+        <p>Her er et ER-diagram som viser relasjonene mellom entitetene:</p>
+        <img src="/uploads/ER_diagram.svg" alt="ER Diagram for Database" style="max-width: 50%; height: auto;">
+    </section>
+
+    <section>
+        <h2>Prosjektskissering</h2>
+        <p>
+            For mer informasjon om prosjektet, kan du besøke prosjektskisseringen vår på:
+        </p>
+        <ul>
+            <li><a href="https://github.com/your-repo/projects" target="_blank">GitHub Projects</a></li>
+            <li><a href="https://www.notion.so/your-project" target="_blank">Notion</a></li>
+        </ul>
+    </section>
+
+    <a href="/api/profile">Tilbake til profil</a>
+</body>
+</html>

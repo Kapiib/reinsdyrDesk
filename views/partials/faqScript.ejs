@@ -1,0 +1,31 @@
+<script>
+    // JavaScript for the accordion functionality with slide-down animation
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default button behavior
+
+            // Toggle the active class on the clicked question
+            question.classList.toggle('active');
+
+            // Get the answer panel
+            const answer = question.nextElementSibling;
+
+            // Toggle the answer panel's visibility with animation
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null; // Collapse the panel
+            } else {
+                answer.style.maxHeight = answer.scrollHeight + "px"; // Expand the panel
+            }
+
+            // Close other open answers
+            faqQuestions.forEach(otherQuestion => {
+                if (otherQuestion !== question && otherQuestion.classList.contains('active')) {
+                    otherQuestion.classList.remove('active');
+                    otherQuestion.nextElementSibling.style.maxHeight = null;
+                }
+            });
+        });
+    });
+</script>

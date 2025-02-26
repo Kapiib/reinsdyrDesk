@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="no">
+    <%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
+
+    <h1><%= title %></h1>
+    <% if (msg) { %>
+        <p><%= msg %></p>
+    <% } %>
+
+    <!-- Skjema for a opprette et nytt beiteomrade -->
+    <form action="/api/beiteomrade" method="POST">
+        <label for="primærBeiteomrade">Primaert beiteomrade:</label>
+        <select name="primærBeiteomrade" id="primærBeiteomrade" required>
+            <option value="Sør">Sør</option>
+            <option value="Ume">Ume</option>
+            <option value="Pite">Pite</option>
+            <option value="Lule">Lule</option>
+            <option value="Nord">Nord</option>
+            <option value="Enare">Enare</option>
+            <option value="Skolt">Skolt</option>
+            <option value="Akkala">Akkala</option>
+            <option value="Kildin">Kildin</option>
+            <option value="Ter">Ter</option>
+        </select>
+        <button type="submit">Opprett beiteomrade</button>
+    </form>
+
+    <!-- Skjema for a knytte en flokk til et beiteomrade -->
+    <h2>Knytt flokk til beiteomrade</h2>
+    <form action="/api/beiteomrade/associate" method="POST">
+        <label for="beiteomradeId">Beiteomrade:</label>
+        <select name="beiteomradeId" id="beiteomradeId" required>
+            <% beiteomrader.forEach(beiteomrade => { %>
+                <option value="<%= beiteomrade._id %>"><%= beiteomrade.primærBeiteomrade %></option>
+            <% }) %>
+        </select>
+
+        <label for="flokkId">Flokk:</label>
+        <select name="flokkId" id="flokkId" required>
+            <% flokker.forEach(flokk => { %>
+                <option value="<%= flokk._id %>"><%= flokk.navnPaFlokken %></option>
+            <% }) %>
+        </select>
+
+        <button type="submit">Knytt flokk</button>
+    </form>
+
+    <img src="/uploads/beiteomrader.png" alt="Beiteomrade">
+
+    <a href="/api/profile">Tilbake til profil</a>
+</body>
+</html>

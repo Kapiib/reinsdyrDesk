@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include('partials/head') %>
-<body>
-    <%- include('partials/navbar') %>
-
-    <h1>Legg til Reinsdyr</h1>
-
-    <form action="/api/add-reinsdyr" method="POST">
-        <label for="serienummer">Serienummer</label>
-        <input type="text" name="serienummer" placeholder="Serienummer" required>
-
-        <label for="navn">Navn</label>
-        <input type="text" name="navn" placeholder="Navn">
-
-        <label for="fodselsdato">Fødselsdato</label>
-        <input type="date" name="fodselsdato">
-
-        <label for="flokkId">Flokk</label>
-        <select name="flokkId" required>
-            <% flokker.forEach(flokk => { %>
-                <option value="<%= flokk._id %>"><%= flokk.navnPaFlokken %></option>
-            <% }) %>
-        </select>
-        
-        <button type="submit">Add Reinsdyr</button>
-    </form>
+    <body>
+        <%- include('partials/navbar') %>
     
-</body>
+        <h1><%= title %></h1>
+    
+        <% if (msg) { %>
+            <p><%= msg %></p>
+        <% } %>
+    
+        <form action="/api/add-reinsdyr" method="POST">
+            <label for="serienummer">Serienummer:</label>
+            <input type="text" id="serienummer" name="serienummer" required>
+    
+            <label for="navn">Navn:</label>
+            <input type="text" id="navn" name="navn">
+    
+            <label for="fodselsdato">Fødselsdato:</label>
+            <input type="date" id="fodselsdato" name="fodselsdato">
+    
+            <label for="flokk">Velg flokk:</label>
+            <select id="flokk" name="flokk" required>
+                <% flokker.forEach(flokk => { %>
+                    <option value="<%= flokk._id %>"><%= flokk.navnPaFlokken %></option>
+                <% }) %>
+            </select>
+    
+            <button type="submit">Registrer reinsdyr</button>
+        </form>
+    </body>
 </html>

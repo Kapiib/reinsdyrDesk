@@ -1,0 +1,295 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 800">
+    <!-- Styles -->
+    <style>
+        .entity {
+            fill: white;
+            stroke: black;
+            stroke-width: 2;
+        }
+        .header {
+            fill: white;
+            stroke: black;
+            stroke-width: 1;
+        }
+        .row {
+            fill: white;
+            stroke: black;
+            stroke-width: 1;
+        }
+        .title {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-anchor: middle;
+        }
+        .attribute {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-anchor: middle;
+        }
+        .datatype {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-anchor: middle;
+        }
+        .keytext {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-anchor: middle;
+        }
+        .connector {
+            stroke: black;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        .relationship-text {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-anchor: middle;
+        }
+        .circle {
+            fill: white;
+            stroke: black;
+            stroke-width: 1.5;
+        }
+        .crow-foot {
+            stroke: black;
+            stroke-width: 1.5;
+            fill: none;
+        }
+    </style>
+
+    <!-- REINSDYR Table -->
+    <rect x="300" y="50" width="300" height="175" class="entity" />
+    <rect x="300" y="50" width="300" height="30" class="header" />
+    <text x="450" y="70" class="title">REINSDYR</text>
+
+    <rect x="300" y="80" width="75" height="25" class="row" />
+    <rect x="375" y="80" width="100" height="25" class="row" />
+    <rect x="475" y="80" width="50" height="25" class="row" />
+    <rect x="525" y="80" width="75" height="25" class="row" />
+    <text x="337" y="97" class="datatype">ObjectId</text>
+    <text x="425" y="97" class="attribute">_id</text>
+    <text x="500" y="97" class="keytext">PK</text>
+    <text x="562" y="97" class="attribute"></text>
+
+    <rect x="300" y="105" width="75" height="25" class="row" />
+    <rect x="375" y="105" width="100" height="25" class="row" />
+    <rect x="475" y="105" width="50" height="25" class="row" />
+    <rect x="525" y="105" width="75" height="25" class="row" />
+    <text x="337" y="122" class="datatype">string</text>
+    <text x="425" y="122" class="attribute">serienummer</text>
+    <text x="500" y="122" class="keytext"></text>
+    <text x="562" y="122" class="attribute">uuid v4</text>
+
+    <rect x="300" y="130" width="75" height="25" class="row" />
+    <rect x="375" y="130" width="100" height="25" class="row" />
+    <rect x="475" y="130" width="50" height="25" class="row" />
+    <rect x="525" y="130" width="75" height="25" class="row" />
+    <text x="337" y="147" class="datatype">string</text>
+    <text x="425" y="147" class="attribute">navn</text>
+    <text x="500" y="147" class="keytext"></text>
+    <text x="562" y="147" class="attribute"></text>
+
+    <rect x="300" y="155" width="75" height="25" class="row" />
+    <rect x="375" y="155" width="100" height="25" class="row" />
+    <rect x="475" y="155" width="50" height="25" class="row" />
+    <rect x="525" y="155" width="75" height="25" class="row" />
+    <text x="337" y="172" class="datatype">date</text>
+    <text x="425" y="172" class="attribute">fødselsdato</text>
+    <text x="500" y="172" class="keytext"></text>
+    <text x="562" y="172" class="attribute"></text>
+
+    <rect x="300" y="180" width="75" height="25" class="row" />
+    <rect x="375" y="180" width="100" height="25" class="row" />
+    <rect x="475" y="180" width="50" height="25" class="row" />
+    <rect x="525" y="180" width="75" height="25" class="row" />
+    <text x="337" y="197" class="datatype">ObjectId</text>
+    <text x="425" y="197" class="attribute">_id</text>
+    <text x="500" y="197" class="keytext">FK</text>
+    <text x="562" y="197" class="attribute">fra flokk</text>
+
+    <!-- FLOKK Table -->
+    <rect x="300" y="350" width="300" height="200" class="entity" />
+    <rect x="300" y="350" width="300" height="30" class="header" />
+    <text x="450" y="370" class="title">FLOKK</text>
+
+    <rect x="300" y="380" width="75" height="25" class="row" />
+    <rect x="375" y="380" width="100" height="25" class="row" />
+    <rect x="475" y="380" width="50" height="25" class="row" />
+    <rect x="525" y="380" width="75" height="25" class="row" />
+    <text x="337" y="397" class="datatype">ObjectId</text>
+    <text x="425" y="397" class="attribute">_id</text>
+    <text x="500" y="397" class="keytext">PK</text>
+    <text x="562" y="397" class="attribute"></text>
+
+    <rect x="300" y="405" width="75" height="25" class="row" />
+    <rect x="375" y="405" width="100" height="25" class="row" />
+    <rect x="475" y="405" width="50" height="25" class="row" />
+    <rect x="525" y="405" width="75" height="25" class="row" />
+    <text x="337" y="422" class="datatype">ObjectId</text>
+    <text x="425" y="422" class="attribute">_id</text>
+    <text x="500" y="422" class="keytext">FK</text>
+    <text x="562" y="422" class="attribute">fra eier</text>
+
+    <rect x="300" y="430" width="75" height="25" class="row" />
+    <rect x="375" y="430" width="100" height="25" class="row" />
+    <rect x="475" y="430" width="50" height="25" class="row" />
+    <rect x="525" y="430" width="75" height="25" class="row" />
+    <text x="337" y="447" class="datatype">string</text>
+    <text x="425" y="447" class="attribute">navn</text>
+    <text x="500" y="447" class="keytext"></text>
+    <text x="562" y="447" class="attribute"></text>
+
+    <rect x="300" y="455" width="75" height="25" class="row" />
+    <rect x="375" y="455" width="100" height="25" class="row" />
+    <rect x="475" y="455" width="50" height="25" class="row" />
+    <rect x="525" y="455" width="75" height="25" class="row" />
+    <text x="337" y="472" class="datatype">string</text>
+    <text x="425" y="472" class="attribute">serieinndeling</text>
+    <text x="500" y="472" class="keytext"></text>
+    <text x="562" y="472" class="attribute">uuid v4</text>
+
+    <rect x="300" y="480" width="75" height="25" class="row" />
+    <rect x="375" y="480" width="100" height="25" class="row" />
+    <rect x="475" y="480" width="50" height="25" class="row" />
+    <rect x="525" y="480" width="75" height="25" class="row" />
+    <text x="337" y="497" class="datatype">string</text>
+    <text x="425" y="497" class="attribute">buemerkeNavn</text>
+    <text x="500" y="497" class="keytext"></text>
+    <text x="562" y="497" class="attribute"></text>
+
+    <rect x="300" y="505" width="75" height="25" class="row" />
+    <rect x="375" y="505" width="100" height="25" class="row" />
+    <rect x="475" y="505" width="50" height="25" class="row" />
+    <rect x="525" y="505" width="75" height="25" class="row" />
+    <text x="337" y="522" class="datatype">string</text>
+    <text x="425" y="522" class="attribute">buemerkeBilde</text>
+    <text x="500" y="522" class="keytext"></text>
+    <text x="562" y="522" class="attribute"></text>
+
+    <rect x="300" y="530" width="75" height="25" class="row" />
+    <rect x="375" y="530" width="100" height="25" class="row" />
+    <rect x="475" y="530" width="50" height="25" class="row" />
+    <rect x="525" y="530" width="75" height="25" class="row" />
+    <text x="337" y="547" class="datatype">ObjectId</text>
+    <text x="425" y="547" class="attribute">_id</text>
+    <text x="500" y="547" class="keytext">FK</text>
+    <text x="562" y="547" class="attribute">fra beiteområde</text>
+
+    <!-- EIER Table -->
+    <rect x="50" y="600" width="300" height="175" class="entity" />
+    <rect x="50" y="600" width="300" height="30" class="header" />
+    <text x="200" y="620" class="title">EIER</text>
+
+    <rect x="50" y="630" width="75" height="25" class="row" />
+    <rect x="125" y="630" width="100" height="25" class="row" />
+    <rect x="225" y="630" width="50" height="25" class="row" />
+    <rect x="275" y="630" width="75" height="25" class="row" />
+    <text x="87" y="647" class="datatype">ObjectId</text>
+    <text x="175" y="647" class="attribute">_id</text>
+    <text x="250" y="647" class="keytext">PK</text>
+    <text x="312" y="647" class="attribute"></text>
+
+    <rect x="50" y="655" width="75" height="25" class="row" />
+    <rect x="125" y="655" width="100" height="25" class="row" />
+    <rect x="225" y="655" width="50" height="25" class="row" />
+    <rect x="275" y="655" width="75" height="25" class="row" />
+    <text x="87" y="672" class="datatype">string</text>
+    <text x="175" y="672" class="attribute">navn</text>
+    <text x="250" y="672" class="keytext"></text>
+    <text x="312" y="672" class="attribute"></text>
+
+    <rect x="50" y="680" width="75" height="25" class="row" />
+    <rect x="125" y="680" width="100" height="25" class="row" />
+    <rect x="225" y="680" width="50" height="25" class="row" />
+    <rect x="275" y="680" width="75" height="25" class="row" />
+    <text x="87" y="697" class="datatype">string</text>
+    <text x="175" y="697" class="attribute">epost</text>
+    <text x="250" y="697" class="keytext"></text>
+    <text x="312" y="697" class="attribute"></text>
+
+    <rect x="50" y="705" width="75" height="25" class="row" />
+    <rect x="125" y="705" width="100" height="25" class="row" />
+    <rect x="225" y="705" width="50" height="25" class="row" />
+    <rect x="275" y="705" width="75" height="25" class="row" />
+    <text x="87" y="722" class="datatype">string</text>
+    <text x="175" y="722" class="attribute">passord</text>
+    <text x="250" y="722" class="keytext"></text>
+    <text x="312" y="722" class="attribute"></text>
+
+    <rect x="50" y="730" width="75" height="25" class="row" />
+    <rect x="125" y="730" width="100" height="25" class="row" />
+    <rect x="225" y="730" width="50" height="25" class="row" />
+    <rect x="275" y="730" width="75" height="25" class="row" />
+    <text x="87" y="747" class="datatype">string</text>
+    <text x="175" y="747" class="attribute">kontaktspråk</text>
+    <text x="250" y="747" class="keytext"></text>
+    <text x="312" y="747" class="attribute"></text>
+
+    <rect x="50" y="755" width="75" height="25" class="row" />
+    <rect x="125" y="755" width="100" height="25" class="row" />
+    <rect x="225" y="755" width="50" height="25" class="row" />
+    <rect x="275" y="755" width="75" height="25" class="row" />
+    <text x="87" y="772" class="datatype">number</text>
+    <text x="175" y="772" class="attribute">telefonnummer</text>
+    <text x="250" y="772" class="keytext"></text>
+    <text x="312" y="772" class="attribute"></text>
+
+    <!-- BEITEOMRÅDE Table -->
+    <rect x="550" y="600" width="300" height="100" class="entity" />
+    <rect x="550" y="600" width="300" height="30" class="header" />
+    <text x="700" y="620" class="title">BEITEOMRÅDE</text>
+
+    <rect x="550" y="630" width="75" height="25" class="row" />
+    <rect x="625" y="630" width="100" height="25" class="row" />
+    <rect x="725" y="630" width="50" height="25" class="row" />
+    <rect x="775" y="630" width="75" height="25" class="row" />
+    <text x="587" y="647" class="datatype">ObjectId</text>
+    <text x="675" y="647" class="attribute">_id</text>
+    <text x="750" y="647" class="keytext">PK</text>
+    <text x="812" y="647" class="attribute"></text>
+
+    <rect x="550" y="655" width="75" height="25" class="row" />
+    <rect x="625" y="655" width="100" height="25" class="row" />
+    <rect x="725" y="655" width="50" height="25" class="row" />
+    <rect x="775" y="655" width="75" height="25" class="row" />
+    <text x="587" y="672" class="datatype">string</text>
+    <text x="675" y="672" class="attribute">beiteområde</text>
+    <text x="750" y="672" class="keytext"></text>
+    <text x="812" y="672" class="attribute"></text>
+
+    <rect x="550" y="680" width="75" height="25" class="row" />
+    <rect x="625" y="680" width="100" height="25" class="row" />
+    <rect x="725" y="680" width="50" height="25" class="row" />
+    <rect x="775" y="680" width="75" height="25" class="row" />
+    <text x="587" y="697" class="datatype">array</text>
+    <text x="675" y="697" class="attribute">fylker</text>
+    <text x="750" y="697" class="keytext"></text>
+    <text x="812" y="697" class="attribute"></text>
+
+    <!-- Relationship between REINSDYR and FLOKK -->
+    <line x1="450" y1="225" x2="450" y2="255" class="connector" />
+    <line x1="450" y1="255" x2="450" y2="290" class="connector" />
+    <text x="450" y="280" class="relationship-text">tilhører</text>
+    <circle cx="450" cy="300" r="10" class="circle" />
+    <line x1="450" y1="310" x2="450" y2="350" class="connector" />
+
+    <!-- Relationship between FLOKK and EIER -->
+    <line x1="300" y1="450" x2="230" y2="450" class="connector" />
+    <line x1="230" y1="450" x2="230" y2="550" class="connector" />
+    <text x="190" y="500" class="relationship-text">eies av</text>
+    <circle cx="230" cy="580" r="10" class="circle" />
+    <line x1="210" y1="580" x2="200" y2="570" class="crow-foot" />
+    <line x1="250" y1="580" x2="260" y2="570" class="crow-foot" />
+    <line x1="230" y1="590" x2="230" y2="600" class="connector" />
+
+    <!-- Relationship between FLOKK and BEITEOMRÅDE -->
+    <line x1="600" y1="450" x2="700" y2="450" class="connector" />
+    <line x1="700" y1="450" x2="700" y2="550" class="connector" />
+    <text x="740" y="500" class="relationship-text">har</text>
+    <circle cx="700" cy="580" r="10" class="circle" />
+    <line x1="680" y1="580" x2="670" y2="570" class="crow-foot" />
+    <line x1="720" y1="580" x2="730" y2="570" class="crow-foot" />
+    <line x1="700" y1="590" x2="700" y2="600" class="connector" />
+</svg>

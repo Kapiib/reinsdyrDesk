@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="no">
+    <%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
+
+    <h1>Ofte stilte spørsmål (<%= title %>)</h1>
+
+    <div class="faq-container">
+        <!-- FAQ Item 1 -->
+        <div class="faq-item">
+            <button class="faq-question">Hvordan registrerer jeg en ny flokk?</button>
+            <div class="faq-answer">
+                <p>Gå til "Lage flokk" siden og fyll ut skjemaet med nødvendig informasjon.</p>
+            </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item">
+            <button class="faq-question">Hvordan legger jeg til et reinsdyr?</button>
+            <div class="faq-answer">
+                <p>Gå til "Legg til reinsdyr" siden og fyll ut skjemaet med reinsdyrets detaljer.</p>
+            </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item">
+            <button class="faq-question">Hvordan endrer jeg informasjon om en flokk?</button>
+            <div class="faq-answer">
+                <p>Du kan redigere flokkinformasjon ved å gå til flokkens detaljside og klikke på "Rediger".</p>
+            </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item">
+            <button class="faq-question">Hvordan sletter jeg en flokk?</button>
+            <div class="faq-answer">
+                <p>Gå til flokkens detaljside og klikk på "Slett". Vær forsiktig, denne handlingen kan ikke angres.</p>
+            </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="faq-item">
+            <button class="faq-question">Hvordan kontakter jeg kundestøtte?</button>
+            <div class="faq-answer">
+                <p>Du kan kontakte kundestøtte via e-post på support@reinsdyrdesk.no eller ringe oss på 123 45 678.</p>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/faqScript') %>
+
+</body>
+</html>

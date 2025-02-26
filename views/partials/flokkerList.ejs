@@ -1,0 +1,60 @@
+<!-- Search Bar -->
+<input type="text" id="searchInput" placeholder="Søk etter flokker..." oninput="searchFlocks()">
+
+<div class="flokker-list">
+    <% if (flokker && flokker.length > 0) { %>
+        <% flokker.forEach(flokk => { %>
+            <div class="flokk-card">
+                <h3><%= flokk.navnPaFlokken %></h3>
+                <p><strong>Serieinndeling:</strong> <%= flokk.serieinndeling %></p>
+                <p><strong>Bumerke navn:</strong> <%= flokk.buemerkeNavn %></p>
+                <% if (flokk.buemerkeBilde) { %>
+                    <img src="<%= flokk.buemerkeBilde %>" alt="Bumerke bilde" style="max-width: 100px;">
+                <% } %>
+                <% if (showEier) { %>
+                    <p class="eier-info"><strong>Eier:</strong> <%= flokk.eier.navn %></p>
+                <% } %>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>Ingen flokker funnet.</p>
+    <% } %>
+</div>
+
+<!-- Include the search script -->
+<script>
+    function searchFlocks() {
+        // Get the search input value and convert it to lowercase
+        const input = document.getElementById('searchInput').value.toLowerCase();
+
+        // Get all flock cards
+        const flocks = document.querySelectorAll('.flokk-card');
+
+        // Loop through all flock cards and toggle their visibility based on the search input
+        flocks.forEach(flock => {
+            const flockName = flock.querySelector('h3').textContent.toLowerCase();
+            const flockSerieinndeling = flock.querySelector('p:nth-child(2)').textContent.split(':')[1].trim().toLowerCase();
+            const flockBuemerke = flock.querySelector('p:nth-child(3)').textContent.split(':')[1].trim().toLowerCase();
+            
+            // Check if there's an owner element and get its text if it exists
+            const ownerElement = flock.querySelector('.eier-info');
+            let flockOwner = '';
+            
+            if (ownerElement) {
+                flockOwner = ownerElement.textContent.split(':')[1].trim().toLowerCase();
+            }
+
+            // Check if any of the fields start with the search input
+            if (
+                flockName.startsWith(input) ||
+                flockSerieinndeling.startsWith(input) ||
+                flockBuemerke.startsWith(input) ||
+                (ownerElement && flockOwner.startsWith(input))
+            ) {
+                flock.style.display = ''; // Show flock
+            } else {
+                flock.style.display = 'none'; // Hide flock
+            }
+        });
+    }
+</script>
