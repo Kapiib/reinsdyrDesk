@@ -6,6 +6,12 @@
 
     <h1>Welcome to your profile: <%= user.epost %></h1>
 
+    <% if (error) { %>
+        <div class="error-message" style="color: red; padding: 10px; margin-bottom: 20px;">
+            <%= error %>
+        </div>
+    <% } %>
+
     <h2>Mine Flokker</h2>
     <%- include('partials/flokkerList', { flokker: flokker, showEier: false }) %>
 

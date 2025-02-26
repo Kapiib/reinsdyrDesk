@@ -222,6 +222,17 @@ button:hover {
     margin-top: 2rem;
 }
 
+.flokker-list img {
+    max-width: 300px;
+}
+
+.flokk-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Navigation */
 nav {
     overflow: hidden;
@@ -288,3 +299,39 @@ img {
     margin-bottom: 0;
 }
 
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.reinsdyr-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.reinsdyr-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.reinsdyr-list > * {
+    flex: 1 1 18%; /* 100% / 5 - gap */
+    max-width: 18%;
+}

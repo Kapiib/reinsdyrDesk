@@ -9,11 +9,16 @@
                 <p><strong>Serieinndeling:</strong> <%= flokk.serieinndeling %></p>
                 <p><strong>Bumerke navn:</strong> <%= flokk.buemerkeNavn %></p>
                 <% if (flokk.buemerkeBilde) { %>
-                    <img src="<%= flokk.buemerkeBilde %>" alt="Bumerke bilde" style="max-width: 100px;">
+                    <img src="<%= flokk.buemerkeBilde %>" alt="Bumerke bilde">
                 <% } %>
                 <% if (showEier) { %>
                     <p class="eier-info"><strong>Eier:</strong> <%= flokk.eier.navn %></p>
                 <% } %>
+                
+                <button 
+        onclick="window.location.href='/flokk/<%= flokk._id %>'"style="margin-top: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        Se reinsdyr
+    </button>
             </div>
         <% }) %>
     <% } else { %>

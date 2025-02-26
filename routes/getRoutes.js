@@ -40,25 +40,20 @@ router.get("/api/databaseInfo", checkJWT, (req, res) => {
 
 // Private Routes
 router.get("/api/profile", checkJWT, authenticateUser, async (req, res) => {
-
-
     try {
-        const user = req.user; // Assuming you have user data from authentication
-        const flokker = await FLOKK.find({ eier: user._id }); // Fetch flocks for the logged-in user
+        const user = req.user;
+        const flokker = await FLOKK.find({ eier: user._id });
 
         res.render("profile", {
             title: "Profile",
-            flokker: flokker, // Pass the flocks to the template
+            flokker: flokker,
             msg: null,
-            user: req.user, // Pass the user
+            user: user,
+            error: req.query.error || null // Pass error query param
         });
     } catch (error) {
         console.error(error);
-        res.render("profile", {
-            title: "Profile",
-            msg: "Noe gikk galt ved henting av flokker.",
-            user: req.user, // Pass the user
-        });
+        res.redirect(`/api/profile?error=${encodeURIComponent("Noe gikk galt ved henting av flokker")}`);
     }
 });
 
@@ -103,7 +98,7 @@ router.get("/api/beiteomrade", checkJWT, authenticateUser, async (req, res) => {
         });
     } catch (error) {
         console.error("Error fetching data for beiteomrade:", error);
-        res.status(500).render("beiteomrade", {
+        res.render("beiteomrade", {
             title: 'Lage beiteomrade',
             msg: "Noe gikk galt ved henting av data.",
             user: req.user,
@@ -118,25 +113,30 @@ router.get("/api/faq", checkJWT, (req, res) => {
 // router that gets the id of a flock only to the owner of the flock by using the cookie
 router.get("/flokk/:flokkId", authenticateUser, async (req, res) => {
     const { flokkId } = req.params;
-    const page = parseInt(req.query.page) || 1; // Get page number from query params, default to 1
-    const limit = 10; // Number of reinsdyr per page
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
     const skip = (page - 1) * limit;
 
     try {
-        const flokk = await FLOKK.findById(flokkId).populate({
+        // Find flock and verify ownership
+        const flokk = await FLOKK.findOne({ 
+            _id: flokkId,
+            eier: req.user._id 
+        }).populate({
             path: 'reinsdyr',
             options: {
                 skip: skip,
-                limit: limit
+                limit: limit,
+                sort: { serienummer: 1 }
             }
         });
 
         if (!flokk) {
-            return res.status(404).send("Flokk not found");
+            return res.redirect(`/api/profile?error=${encodeURIComponent("Ingen tilgang")}`);
         }
 
-        const totalReinsdyr = flokk.reinsdyr.length;
-        const totalPages = Math.ceil(totalReinsdyr / limit);
+        const totalReinsdyr = await FLOKK.findById(flokkId).select('reinsdyr');
+        const totalPages = Math.ceil(totalReinsdyr.reinsdyr.length / limit);
 
         res.render("flokk", {
             title: flokk.navnPaFlokken,
@@ -147,7 +147,7 @@ router.get("/flokk/:flokkId", authenticateUser, async (req, res) => {
         });
     } catch (error) {
         console.error("Error fetching flokk:", error);
-        res.status(500).send("Error fetching flokk");
+        res.redirect(`/api/profile?error=${encodeURIComponent("Serverfeil")}`);
     }
 });
 

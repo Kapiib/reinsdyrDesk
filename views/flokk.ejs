@@ -1,31 +1,45 @@
-<!-- Display flokk information -->
-<h1><%= flokk.navnPaFlokken %></h1>
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+<body>
+    <%- include('partials/navbar') %>
 
-<!-- Display the list of reinsdyr with pagination -->
-<h2>Reinsdyr:</h2>
-<ul>
-    <% flokk.reinsdyr.forEach(reinsdyr => { %>
-        <li><%= reinsdyr.navn || reinsdyr.serienummer %></li>
-    <% }) %>
-</ul>
+    <h1><%= flokk.navnPaFlokken %></h1>
 
-<!-- Pagination links -->
-<div>
-    <% if (currentPage > 1) { %>
-        <a href="/flokk/<%= flokk._id %>?page=<%= currentPage - 1 %>">Previous</a>
+    <h2>Reinsdyr</h2>
+
+    <% if (flokk.reinsdyr.length === 0) { %>
+        <p>Ingen reinsdyr i denne flokken.</p>
+    <% } else { %>
+        <ul class="reinsdyr-list">
+            <% flokk.reinsdyr.forEach(reinsdyr => { %>
+                <li>
+                    Serienummer: <%= reinsdyr.serienummer %><br>
+                    Navn: <%= reinsdyr.navn %><br>
+                    Fødselsdato: <%= reinsdyr.fodselsdato.toLocaleDateString() %>
+                </li>
+            <% }); %>
+        </ul>
+
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+                <a href="/flokk/<%= flokk._id %>?page=<%= currentPage - 1 %>">Forrige</a>
+            <% } %>
+
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a 
+                    href="/flokk/<%= flokk._id %>?page=<%= i %>" 
+                    class="<%= i === currentPage ? 'active' : '' %>"
+                >
+                    <%= i %>
+                </a>
+            <% } %>
+
+            <% if (currentPage < totalPages) { %>
+                <a href="/flokk/<%= flokk._id %>?page=<%= currentPage + 1 %>">Neste</a>
+            <% } %>
+        </div>
     <% } %>
 
-    <span>Page <%= currentPage %> of <%= totalPages %></span>
-
-    <% if (currentPage < totalPages) { %>
-        <a href="/flokk/<%= flokk._id %>?page=<%= currentPage + 1 %>">Next</a>
-    <% } %>
-</div>
-
-<% if(flokk.eier.equals(user._id)) {%>
-    <form action="/api/transfer-reinsdyr" method="POST">
-        <input type="hidden" name="reinsdyrId" value="<%= reinsdyr._id %>">
-        <input type="email" name="toEierEmail" placeholder="Ny Eier Epost" required>
-        <button type="submit">Overfør Reinsdyr</button>
-    </form>
-    <% } %>
+</body>
+</html>
