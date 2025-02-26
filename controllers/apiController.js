@@ -2,6 +2,7 @@ const FLOKK = require("../models/flokk");
 const INDIVIDUELT_REINSDYR = require("../models/individueltReinsdyr");
 const EIER = require("../models/eier");
 const BEITEOMRADE = require("../models/beiteomrade");
+const TRANSACTION = require("../models/transaction");
 
 // Function to create a new flokk
 const apiController = {
@@ -49,23 +50,72 @@ const apiController = {
     addReinsdyr: async (req, res) => {
         try {
             const { serienummer, navn, fodselsdato, flokk } = req.body;
-
-            // Create a new reindeer
-            const newReinsdyr = new INDIVIDUELT_REINSDYR({
-                serienummer,
-                navn,
-                fodselsdato,
-                flokk, // Assign the reindeer to the selected flock
-            });
-
-            await newReinsdyr.save();
-            res.redirect("/api/profile"); // Redirect after successful registration
+    
+            // Ensure flokk is an array
+            const flokkArray = Array.isArray(flokk) ? flokk : [flokk];
+    
+            // Check if a reindeer with the same serienummer already exists
+            let existingReinsdyr = await INDIVIDUELT_REINSDYR.findOne({ serienummer });
+    
+            if (existingReinsdyr) {
+                // Check if the reindeer is already associated with all selected flokks
+                const allFlokksAssociated = flokkArray.every(flokkId =>
+                    existingReinsdyr.flokk.includes(flokkId)
+                );
+    
+                if (allFlokksAssociated) {
+                    const userFlokker = await FLOKK.find({ eier: req.user._id });
+                    return res.status(400).render("add-reinsdyr", {
+                        title: "Sett inn Reinsdyr",
+                        msg: "Et reinsdyr med dette serienummeret eksisterer allerede i alle valgte flokker.",
+                        flokker: userFlokker,
+                        user: req.user,
+                    });
+                } else {
+                    // Add the reinsdyr to the flokks it's not already associated with
+                    for (const flokkId of flokkArray) {
+                        if (!existingReinsdyr.flokk.includes(flokkId)) {
+                            existingReinsdyr.flokk.push(flokkId);
+                            await FLOKK.findByIdAndUpdate(flokkId, { $addToSet: { reinsdyr: existingReinsdyr._id } });
+                        }
+                    }
+                    await existingReinsdyr.save();
+                    return res.redirect("/api/profile");
+                }
+            } else {
+                // Create a new reindeer
+                const newReinsdyr = new INDIVIDUELT_REINSDYR({
+                    serienummer,
+                    navn,
+                    fodselsdato,
+                    flokk: flokkArray, // Assign the reindeer to the selected flocks
+                });
+    
+                await newReinsdyr.save();
+    
+                // Add the reindeer to each selected flock
+                for (const flokkId of flokkArray) {
+                    await FLOKK.findByIdAndUpdate(flokkId, { $addToSet: { reinsdyr: newReinsdyr._id } });
+                }
+    
+                res.redirect("/api/profile"); // Redirect after successful registration
+            }
         } catch (error) {
             console.error("Error adding reindeer:", error);
-
+    
+            if (error.code === 11000 && error.keyPattern && error.keyPattern.serienummer) {
+                const userFlokker = await FLOKK.find({ eier: req.user._id });
+                return res.status(400).render("add-reinsdyr", {
+                    title: "Sett inn Reinsdyr",
+                    msg: "Et reinsdyr med dette serienummeret eksisterer allerede.",
+                    flokker: userFlokker,
+                    user: req.user,
+                });
+            }
+    
             // Fetch the user's flocks to pass to the template
             const flokker = await FLOKK.find({ eier: req.user._id });
-
+    
             res.status(500).render("add-reinsdyr", {
                 title: "Sett inn Reinsdyr",
                 msg: "Noe gikk galt ved registrering av reinsdyr.",

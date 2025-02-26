@@ -1,0 +1,31 @@
+<!-- Display flokk information -->
+<h1><%= flokk.navnPaFlokken %></h1>
+
+<!-- Display the list of reinsdyr with pagination -->
+<h2>Reinsdyr:</h2>
+<ul>
+    <% flokk.reinsdyr.forEach(reinsdyr => { %>
+        <li><%= reinsdyr.navn || reinsdyr.serienummer %></li>
+    <% }) %>
+</ul>
+
+<!-- Pagination links -->
+<div>
+    <% if (currentPage > 1) { %>
+        <a href="/flokk/<%= flokk._id %>?page=<%= currentPage - 1 %>">Previous</a>
+    <% } %>
+
+    <span>Page <%= currentPage %> of <%= totalPages %></span>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="/flokk/<%= flokk._id %>?page=<%= currentPage + 1 %>">Next</a>
+    <% } %>
+</div>
+
+<% if(flokk.eier.equals(user._id)) {%>
+    <form action="/api/transfer-reinsdyr" method="POST">
+        <input type="hidden" name="reinsdyrId" value="<%= reinsdyr._id %>">
+        <input type="email" name="toEierEmail" placeholder="Ny Eier Epost" required>
+        <button type="submit">Overfør Reinsdyr</button>
+    </form>
+    <% } %>

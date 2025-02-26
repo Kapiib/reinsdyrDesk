@@ -21,7 +21,7 @@
             <input type="date" id="fodselsdato" name="fodselsdato">
     
             <label for="flokk">Velg flokk:</label>
-            <select id="flokk" name="flokk" required>
+            <select id="flokk" name="flokk" multiple required>
                 <% flokker.forEach(flokk => { %>
                     <option value="<%= flokk._id %>"><%= flokk.navnPaFlokken %></option>
                 <% }) %>

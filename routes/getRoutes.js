@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const FLOKK = require("../models/flokk.js");
 const BEITEOMRADE = require("../models/beiteomrade.js");
+const TRANSACTION = require("../models/transaction.js");
 const checkJWT = require("../utils/checkJWT.js");
 const { authenticateUser } = require("../utils/authMiddlewear.js");
 
@@ -112,6 +113,42 @@ router.get("/api/beiteomrade", checkJWT, authenticateUser, async (req, res) => {
 
 router.get("/api/faq", checkJWT, (req, res) => {
     res.render("faq", {title: 'FAQ', msg: null, user: req.user});
+});
+
+// router that gets the id of a flock only to the owner of the flock by using the cookie
+router.get("/flokk/:flokkId", authenticateUser, async (req, res) => {
+    const { flokkId } = req.params;
+    const page = parseInt(req.query.page) || 1; // Get page number from query params, default to 1
+    const limit = 10; // Number of reinsdyr per page
+    const skip = (page - 1) * limit;
+
+    try {
+        const flokk = await FLOKK.findById(flokkId).populate({
+            path: 'reinsdyr',
+            options: {
+                skip: skip,
+                limit: limit
+            }
+        });
+
+        if (!flokk) {
+            return res.status(404).send("Flokk not found");
+        }
+
+        const totalReinsdyr = flokk.reinsdyr.length;
+        const totalPages = Math.ceil(totalReinsdyr / limit);
+
+        res.render("flokk", {
+            title: flokk.navnPaFlokken,
+            user: req.user,
+            flokk: flokk,
+            currentPage: page,
+            totalPages: totalPages
+        });
+    } catch (error) {
+        console.error("Error fetching flokk:", error);
+        res.status(500).send("Error fetching flokk");
+    }
 });
 
 module.exports = router;
