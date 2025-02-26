@@ -9,12 +9,11 @@ const { authenticateUser } = require("../utils/authMiddlewear.js");
 // public Routes
 router.get("/", checkJWT, async (req, res) => {
     try {
-        // Fetch all flocks
-        const flokker = await FLOKK.find().populate("eier", "navn"); // Populate the owner's name
+        const flokker = await FLOKK.find().populate("eier", "navn"); 
         res.render("index", {
             title: "ReinsdyrDesk",
-            flokker: flokker, // Pass all flocks to the template
-            user: req.user || null, // Pass the user (if logged in)
+            flokker: flokker, 
+            user: req.user || null,
         });
     } catch (error) {
         console.error("Error fetching flocks for index:", error);
@@ -38,6 +37,10 @@ router.get("/api/databaseInfo", checkJWT, (req, res) => {
     res.render("databaseInfo", {title: 'Database Informasjon', user: req.user});
 });
 
+router.get("/api/faq", checkJWT, (req, res) => {
+    res.render("faq", {title: 'FAQ', msg: null, user: req.user});
+});
+
 // Private Routes
 router.get("/api/profile", checkJWT, authenticateUser, async (req, res) => {
     try {
@@ -49,7 +52,7 @@ router.get("/api/profile", checkJWT, authenticateUser, async (req, res) => {
             flokker: flokker,
             msg: null,
             user: user,
-            error: req.query.error || null // Pass error query param
+            error: req.query.error || null 
         });
     } catch (error) {
         console.error(error);
@@ -60,14 +63,13 @@ router.get("/api/profile", checkJWT, authenticateUser, async (req, res) => {
 router.get("/api/add-reinsdyr", checkJWT, authenticateUser, async (req, res) => {
 
     try {
-        // Fetch the user's flocks
         const flokker = await FLOKK.find({ eier: req.user._id });
         
         res.render("add-reinsdyr", {
             title: "Sett inn Reinsdyr",
-            flokker: flokker, // Pass the flocks to the template
+            flokker: flokker, 
             msg: null,
-            user: req.user, // Pass the user
+            user: req.user,
         });
     } catch (error) {
         console.error("Error fetching flocks:", error);
@@ -85,7 +87,6 @@ router.get("/api/nyFlokk", checkJWT, authenticateUser, (req, res) => {
 
 router.get("/api/beiteomrade", checkJWT, authenticateUser, async (req, res) => {
     try {
-        // Fetch all grazing areas and flocks for the logged-in user
         const beiteomrader = await BEITEOMRADE.find();
         const flokker = await FLOKK.find({ eier: req.user._id });
 
@@ -93,8 +94,8 @@ router.get("/api/beiteomrade", checkJWT, authenticateUser, async (req, res) => {
             title: 'Lage beiteomrade',
             msg: null,
             user: req.user,
-            beiteomrader: beiteomrader, // Pass grazing areas to the template
-            flokker: flokker, // Pass flocks to the template
+            beiteomrader: beiteomrader, 
+            flokker: flokker, 
         });
     } catch (error) {
         console.error("Error fetching data for beiteomrade:", error);
@@ -106,9 +107,6 @@ router.get("/api/beiteomrade", checkJWT, authenticateUser, async (req, res) => {
     }
 });
 
-router.get("/api/faq", checkJWT, (req, res) => {
-    res.render("faq", {title: 'FAQ', msg: null, user: req.user});
-});
 
 // router that gets the id of a flock only to the owner of the flock by using the cookie
 router.get("/flokk/:flokkId", authenticateUser, async (req, res) => {
@@ -118,7 +116,6 @@ router.get("/flokk/:flokkId", authenticateUser, async (req, res) => {
     const skip = (page - 1) * limit;
 
     try {
-        // Find flock and verify ownership
         const flokk = await FLOKK.findOne({ 
             _id: flokkId,
             eier: req.user._id 

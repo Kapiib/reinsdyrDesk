@@ -9,7 +9,6 @@
         <p><%= msg %></p>
     <% } %>
 
-    <!-- Skjema for a opprette et nytt beiteomrade -->
     <form action="/api/beiteomrade" method="POST">
         <label for="primærBeiteomrade">Primaert beiteomrade:</label>
         <select name="primærBeiteomrade" id="primærBeiteomrade" required>
@@ -27,7 +26,6 @@
         <button type="submit">Opprett beiteomrade</button>
     </form>
 
-    <!-- Skjema for a knytte en flokk til et beiteomrade -->
     <h2>Knytt flokk til beiteomrade</h2>
     <form action="/api/beiteomrade/associate" method="POST">
         <label for="beiteomradeId">Beiteomrade:</label>

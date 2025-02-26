@@ -8,8 +8,8 @@ const checkJWT = (req, res, next) => {
         const decodedToken = verifyToken(token);
 
         if (decodedToken) {
-            req.user = decodedToken; // Attach to req.user
-            console.log("Decoded user:", req.user); // Debugging
+            req.user = decodedToken; 
+            console.log("Decoded user:", req.user); 
         } else {
             req.user = null;
         }

@@ -1,10 +1,9 @@
 <script>
-    // JavaScript for the accordion functionality with slide-down animation
     const faqQuestions = document.querySelectorAll('.faq-question');
 
     faqQuestions.forEach(question => {
         question.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent default button behavior
+            event.preventDefault(); 
 
             // Toggle the active class on the clicked question
             question.classList.toggle('active');
@@ -14,9 +13,9 @@
 
             // Toggle the answer panel's visibility with animation
             if (answer.style.maxHeight) {
-                answer.style.maxHeight = null; // Collapse the panel
+                answer.style.maxHeight = null; 
             } else {
-                answer.style.maxHeight = answer.scrollHeight + "px"; // Expand the panel
+                answer.style.maxHeight = answer.scrollHeight + "px"; 
             }
 
             // Close other open answers

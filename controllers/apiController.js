@@ -4,14 +4,12 @@ const EIER = require("../models/eier");
 const BEITEOMRADE = require("../models/beiteomrade");
 const TRANSACTION = require("../models/transaction");
 
-// Function to create a new flokk
 const apiController = {
-    // Function to create a new flokk
     createFlokk: async (req, res) => {
         try {
             const { navnPaFlokken, serieinndeling, buemerkeNavn } = req.body;
             const buemerkeBilde = req.file ? `/uploads/${req.file.filename}` : null;
-            const eier = req.user._id; // Use req.user._id
+            const eier = req.user._id;
 
             // Check if a flock with the same name already exists for the user
             const existingFlokk = await FLOKK.findOne({ eier: req.user._id, navnPaFlokken: navnPaFlokken });
@@ -24,7 +22,6 @@ const apiController = {
                 });
             }
 
-            // Create a new flock
             const newFlokk = new FLOKK({
                 navnPaFlokken,
                 serieinndeling,
@@ -34,9 +31,9 @@ const apiController = {
             });
 
             await newFlokk.save();
-            res.redirect("/api/profile"); // Redirect after successful creation
+            res.redirect("/api/profile"); 
         } catch (error) {
-            console.error("Error creating flokk:", error); // Debugging
+            console.error("Error creating flokk:", error);
             return res.render('nyFlokk', {
                 title: 'NyFlokk',
                 success: false,
@@ -51,14 +48,11 @@ const apiController = {
         try {
             const { serienummer, navn, fodselsdato, flokk } = req.body;
     
-            // Ensure flokk is an array
             const flokkArray = Array.isArray(flokk) ? flokk : [flokk];
     
-            // Check if a reindeer with the same serienummer already exists
             let existingReinsdyr = await INDIVIDUELT_REINSDYR.findOne({ serienummer });
     
             if (existingReinsdyr) {
-                // Check if the reindeer is already associated with all selected flokks
                 const allFlokksAssociated = flokkArray.every(flokkId =>
                     existingReinsdyr.flokk.includes(flokkId)
                 );
@@ -72,7 +66,6 @@ const apiController = {
                         user: req.user,
                     });
                 } else {
-                    // Add the reinsdyr to the flokks it's not already associated with
                     for (const flokkId of flokkArray) {
                         if (!existingReinsdyr.flokk.includes(flokkId)) {
                             existingReinsdyr.flokk.push(flokkId);
@@ -83,12 +76,11 @@ const apiController = {
                     return res.redirect("/api/profile");
                 }
             } else {
-                // Create a new reindeer
                 const newReinsdyr = new INDIVIDUELT_REINSDYR({
                     serienummer,
                     navn,
                     fodselsdato,
-                    flokk: flokkArray, // Assign the reindeer to the selected flocks
+                    flokk: flokkArray, 
                 });
     
                 await newReinsdyr.save();
@@ -98,7 +90,7 @@ const apiController = {
                     await FLOKK.findByIdAndUpdate(flokkId, { $addToSet: { reinsdyr: newReinsdyr._id } });
                 }
     
-                res.redirect("/api/profile"); // Redirect after successful registration
+                res.redirect("/api/profile"); 
             }
         } catch (error) {
             console.error("Error adding reindeer:", error);
@@ -113,7 +105,6 @@ const apiController = {
                 });
             }
     
-            // Fetch the user's flocks to pass to the template
             const flokker = await FLOKK.find({ eier: req.user._id });
     
             res.status(500).render("add-reinsdyr", {
@@ -126,14 +117,14 @@ const apiController = {
     },
     createBeiteomrade: async (req, res) => {
         try {
-            const { primærBeiteomrade } = req.body; // Ensure this matches the form field name
+            const { primærBeiteomrade } = req.body; 
 
             const newBeiteomrade = new BEITEOMRADE({
-                primærBeiteomrade, // Ensure this matches the model field name
+                primærBeiteomrade, 
             });
 
             await newBeiteomrade.save();
-            res.redirect("/api/beiteomrade"); // Redirect back to the beiteomrade page
+            res.redirect("/api/beiteomrade");
         } catch (err) {
             console.error("Feil ved opprettelse av beiteomrade:", err);
             res.render("beiteomrade", {
@@ -159,14 +150,13 @@ const apiController = {
                     title: "Knytt flokk til beiteomrade",
                     msg: "Beiteomrade ikke funnet.",
                     user: req.user,
-                    beiteomrader: beiteomrader, // Pass grazing areas to the template
-                    flokker: flokker, // Pass flocks to the template
+                    beiteomrader: beiteomrader, 
+                    flokker: flokker, 
                 });
             }
 
             const flokk = await FLOKK.findById(flokkId);
             if (!flokk) {
-                // Fetch grazing areas and flocks to pass to the view
                 const beiteomrader = await BEITEOMRADE.find();
                 const flokker = await FLOKK.find({ eier: req.user._id });
 
@@ -174,15 +164,14 @@ const apiController = {
                     title: "Knytt flokk til beiteomrade",
                     msg: "Flokk ikke funnet.",
                     user: req.user,
-                    beiteomrader: beiteomrader, // Pass grazing areas to the template
-                    flokker: flokker, // Pass flocks to the template
+                    beiteomrader: beiteomrader, 
+                    flokker: flokker, 
                 });
             }
 
             beiteomrade.flokker.push(flokkId);
             await beiteomrade.save();
 
-            // Fetch grazing areas and flocks to pass to the view
             const beiteomrader = await BEITEOMRADE.find();
             const flokker = await FLOKK.find({ eier: req.user._id });
 
@@ -190,13 +179,12 @@ const apiController = {
                 title: "Knytt flokk til beiteomrade",
                 msg: "Flokk ble knyttet til beiteomrade.",
                 user: req.user,
-                beiteomrader: beiteomrader, // Pass grazing areas to the template
-                flokker: flokker, // Pass flocks to the template
+                beiteomrader: beiteomrader, 
+                flokker: flokker, 
             });
         } catch (err) {
             console.error("Feil ved tilknytning av flokk til beiteomrade:", err);
 
-            // Fetch grazing areas and flocks to pass to the view
             const beiteomrader = await BEITEOMRADE.find();
             const flokker = await FLOKK.find({ eier: req.user._id });
 
@@ -204,8 +192,8 @@ const apiController = {
                 title: "Knytt flokk til beiteomrade",
                 msg: "Noe gikk galt ved tilknytning av flokk til beiteomrade.",
                 user: req.user,
-                beiteomrader: beiteomrader, // Pass grazing areas to the template
-                flokker: flokker, // Pass flocks to the template
+                beiteomrader: beiteomrader, 
+                flokker: flokker,
             });
         }
     },

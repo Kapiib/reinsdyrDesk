@@ -26,16 +26,12 @@
     <% } %>
 </div>
 
-<!-- Include the search script -->
 <script>
     function searchFlocks() {
-        // Get the search input value and convert it to lowercase
         const input = document.getElementById('searchInput').value.toLowerCase();
 
-        // Get all flock cards
         const flocks = document.querySelectorAll('.flokk-card');
 
-        // Loop through all flock cards and toggle their visibility based on the search input
         flocks.forEach(flock => {
             const flockName = flock.querySelector('h3').textContent.toLowerCase();
             const flockSerieinndeling = flock.querySelector('p:nth-child(2)').textContent.split(':')[1].trim().toLowerCase();
@@ -49,16 +45,15 @@
                 flockOwner = ownerElement.textContent.split(':')[1].trim().toLowerCase();
             }
 
-            // Check if any of the fields start with the search input
             if (
                 flockName.startsWith(input) ||
                 flockSerieinndeling.startsWith(input) ||
                 flockBuemerke.startsWith(input) ||
                 (ownerElement && flockOwner.startsWith(input))
             ) {
-                flock.style.display = ''; // Show flock
+                flock.style.display = ''; 
             } else {
-                flock.style.display = 'none'; // Hide flock
+                flock.style.display = 'none';
             }
         });
     }
